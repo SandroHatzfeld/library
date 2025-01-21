@@ -5,26 +5,35 @@
 }
 
 #wrapper {
-  position: relative;
+  padding: 40px;
 }
 #library {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 30px;
 }
 .book {
-  padding: 10px;
-  min-height: 300px;
+  min-height: 420px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #dddddd;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  transition: ease 0.4s all;
+}
+.book:hover {
+  transform: scale(1.1);
 }
 .checkbox {
+  margin: 10px;
   align-self: flex-end;
   border: 1px solid black;
+  border-radius: 3px;
   width: 30px;
   height: 30px;
+  background-color: white;
+  cursor: pointer;
 }
 .checkmark {
   width: 100%;
@@ -34,8 +43,21 @@
 .checkmark.read {
   opacity: 1;
 }
+.bookInfo {
+  padding: 10px;
+  opacity: 0;
+  display: grid;
+  transition: ease 0.4s all;
+  transform: translateY(100%);
+}
+.book:hover .bookInfo {
+  background-color: rgba(20, 20, 20, 0.8);
+  color: white;
+  opacity: 1;
+  transform: translateY(0);
+}
 #addBtn {
-  position: absolute;
+  position: fixed;
   width: 50px;
   height: 50px;
   right: 20px;
