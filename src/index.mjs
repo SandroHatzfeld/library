@@ -10,7 +10,9 @@ const addBookPages = document.querySelector("#pages")
 const addBookStatus = document.querySelector("#status")
 const addBookCoverimage = document.querySelector("#coverImage")
 const addBookSubmit = document.querySelector("#addBookSubmit")
-const checkboxes = document.querySelectorAll(".checkbox")
+
+var checkboxes
+var removeBtns
 
 const library = []
 
@@ -30,28 +32,7 @@ function Book(title, author, pages, read, cover) {
 
 function addBookToLibrary(book) {
   library.push(book)
-}
-
-function displayLibrary() {
-  console.log(library)
-  libraryDisplay.innerHTML = ""
-  library.forEach((book, index) => {
-    const bookElement = document.createElement("div")
-    bookElement.classList.add("book")
-    bookElement.dataset.index = index
-    bookElement.style.backgroundImage = `url("${book.cover}"`
-
-    bookElement.innerHTML = `<div class="checkbox"><img class="checkmark ${
-      book.read ? "read" : ""
-    }" src=${checkmark}></div><div class="bookInfo"><h2>${
-      book.title
-    }</h2><span class="author">Author: ${
-      book.author
-    }</span><span class="pages">Pages: ${book.pages}</span>
-    </div>`
-
-    libraryDisplay.appendChild(bookElement)
-  })
+  addBookVisual(book, library.length + 1)
 }
 
 const book1 = new Book(
@@ -129,7 +110,8 @@ addBookToLibrary(book8)
 addBookToLibrary(book9)
 addBookToLibrary(book10)
 
-displayLibrary()
+checkboxes = document.querySelectorAll(".checkbox")
+removeBtns = document.querySelectorAll(".removeBtn")
 
 addBookSubmit.addEventListener("click", (event) => {
   event.preventDefault()
@@ -141,7 +123,7 @@ addBookSubmit.addEventListener("click", (event) => {
     addBookCoverimage.value
   )
   addBookToLibrary(book)
-  displayLibrary()
+  newBookWrapper.classList.add("hidden")
 })
 
 addBtn.addEventListener("click", () => {
@@ -150,3 +132,40 @@ addBtn.addEventListener("click", () => {
 closeBtn.addEventListener("click", () => {
   newBookWrapper.classList.add("hidden")
 })
+
+checkboxes.forEach((checkbox, index) => {
+  checkbox.addEventListener("click", (event) => {
+    library[index].read = !library[index].read
+    event.currentTarget.firstChild.classList.toggle("read")
+  })
+})
+
+removeBtns.forEach((button) => {
+  button.addEventListener("click", (event) => {
+    const bookIndex = event.currentTarget.closest(".book").dataset.index
+    removeBookVisual(bookIndex)
+    library.splice(bookIndex, 1)
+  })
+})
+
+function removeBookVisual(index) {
+  document.querySelector(`[data-index="${index}"]`).remove()
+}
+
+function addBookVisual(book, index) {
+  const bookElement = document.createElement("div")
+  bookElement.classList.add("book")
+  bookElement.dataset.index = index
+  bookElement.style.backgroundImage = `url("${book.cover}"`
+
+  bookElement.innerHTML = `<div class="bookControls"><div class="removeBtn"></div><div class="checkbox"><img class="checkmark ${
+    book.read ? "read" : ""
+  }" src=${checkmark}></div></div><div class="bookInfo"><h2>${
+    book.title
+  }</h2><span class="author">Author: ${
+    book.author
+  }</span><span class="pages">Pages: ${book.pages}</span>
+    </div>`
+
+  libraryDisplay.appendChild(bookElement)
+}
