@@ -1,6 +1,6 @@
 import "./styles.css"
+import checkmark from "./assets/images/checkmark.svg"
 const libraryDisplay = document.querySelector("#library")
-const fragment = document.createDocumentFragment()
 const library = []
 
 function Book(title, author, pages, read) {
@@ -25,11 +25,15 @@ function displayLibrary() {
     const bookElement = document.createElement("div")
     bookElement.classList.add("book")
 
-    bookElement.innerHTML = `<h2>${book.title}</h2><span>${
+    bookElement.innerHTML = `<h2>${
+      book.title
+    }</h2><span class="author">Author: ${
       book.author
-    }</span><br><span>Pages: ${book.pages}</span><div class="checkbox ${
+    }</span><br><span class="pages">Pages: ${
+      book.pages
+    }</span><div class="checkbox"><img class="checkmark ${
       book.read ? "read" : ""
-    }"></div>`
+    }" src=${checkmark}></div>`
 
     libraryDisplay.appendChild(bookElement)
   })
