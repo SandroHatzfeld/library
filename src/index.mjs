@@ -1,5 +1,3 @@
-import "./styles.css"
-import checkmark from "./assets/images/checkmark.svg"
 const libraryDisplay = document.querySelector("#library")
 const addBtn = document.querySelector("#addBtn")
 const closeBtn = document.querySelector("#closeBtn")
@@ -99,19 +97,20 @@ const book10 = new Book(
   true,
   "https://michaelende.de/sites/default/files/Unendliche%20Geschichte_6.jpg"
 )
+document.addEventListener("DOMContentLoaded", () => {
+  addBookToLibrary(book1)
+  addBookToLibrary(book2)
+  addBookToLibrary(book3)
+  addBookToLibrary(book4)
+  addBookToLibrary(book6)
+  addBookToLibrary(book7)
+  addBookToLibrary(book8)
+  addBookToLibrary(book9)
+  addBookToLibrary(book10)
+})
 
-addBookToLibrary(book1)
-addBookToLibrary(book2)
-addBookToLibrary(book3)
-addBookToLibrary(book4)
-addBookToLibrary(book6)
-addBookToLibrary(book7)
-addBookToLibrary(book8)
-addBookToLibrary(book9)
-addBookToLibrary(book10)
-
-checkboxes = document.querySelectorAll(".checkbox")
-removeBtns = document.querySelectorAll(".removeBtn")
+// checkboxes = document.querySelectorAll(".checkbox")
+// removeBtns = document.querySelectorAll(".removeBtn")
 
 addBookSubmit.addEventListener("click", (event) => {
   event.preventDefault()
@@ -133,39 +132,56 @@ closeBtn.addEventListener("click", () => {
   newBookWrapper.classList.add("hidden")
 })
 
-checkboxes.forEach((checkbox, index) => {
-  checkbox.addEventListener("click", (event) => {
-    library[index].read = !library[index].read
-    event.currentTarget.firstChild.classList.toggle("read")
-  })
-})
+// checkboxes.forEach((checkbox, index) => {
+//   checkbox.addEventListener("click", (event) => {
+//     library[index].read = !library[index].read
+//     event.currentTarget.firstChild.classList.toggle("read")
+//   })
+// })
 
-removeBtns.forEach((button) => {
-  button.addEventListener("click", (event) => {
-    const bookIndex = event.currentTarget.closest(".book").dataset.index
-    removeBookVisual(bookIndex)
-    library.splice(bookIndex, 1)
-  })
-})
+// removeBtns.forEach((button) => {
+//   button.addEventListener("click", (event) => {
+//     const bookIndex = event.currentTarget.closest(".book").dataset.index
+//     removeBookVisual(bookIndex)
+//     library.splice(bookIndex, 1)
+//   })
+// })
 
 function removeBookVisual(index) {
   document.querySelector(`[data-index="${index}"]`).remove()
 }
 
 function addBookVisual(book, index) {
-  const bookElement = document.createElement("div")
-  bookElement.classList.add("book")
+  const fragment = document.createDocumentFragment()
+
+  // selects template content and add classes/background images
+  const bookTemplate = document
+    .querySelector("#bookTemplate")
+    .content.cloneNode(true)
+  const bookElement = bookTemplate.querySelector(".book")
   bookElement.dataset.index = index
   bookElement.style.backgroundImage = `url("${book.cover}"`
 
-  bookElement.innerHTML = `<div class="bookControls"><div class="removeBtn"></div><div class="checkbox"><img class="checkmark ${
-    book.read ? "read" : ""
-  }" src=${checkmark}></div></div><div class="bookInfo"><h2>${
-    book.title
-  }</h2><span class="author">Author: ${
-    book.author
-  }</span><span class="pages">Pages: ${book.pages}</span>
-    </div>`
+  // Add eventlisteners for removing the book element
+  bookTemplate
+    .querySelector(".removeBtn")
+    .addEventListener("click", (event) => {
+      const bookIndex = event.currentTarget.closest(".book").dataset.index
+      removeBookVisual(bookIndex)
+      library.splice(bookIndex, 1)
+    })
 
-  libraryDisplay.appendChild(bookElement)
+  // Add eventlisteners for the checkbox
+  bookTemplate.querySelector(".checkbox").addEventListener("click", (event) => {
+    library[bookElement.dataset.index].read =
+      !library[bookElement.dataset.index].read
+    event.currentTarget.firstChild.classList.toggle("read")
+  })
+
+  bookTemplate.querySelector("h2").innerHTML = book.title
+  bookTemplate.querySelector(".author").innerHTML = `Author ${book.title}`
+  bookTemplate.querySelector(".pages").innerHTML = `Pages ${book.pages}`
+
+  fragment.appendChild(bookTemplate)
+  libraryDisplay.appendChild(fragment)
 }
