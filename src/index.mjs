@@ -20,17 +20,11 @@ function Book(title, author, pages, read, cover) {
   this.pages = pages
   this.read = read
   this.cover = cover
-
-  this.info = () => {
-    return `${this.title} by ${this.author} has ${this.pages} pages, you ${
-      this.read ? "already read it" : "didn't read it"
-    }.`
-  }
 }
 
 function addBookToLibrary(book) {
   library.push(book)
-  addBookVisual(book, library.length + 1)
+  addBookVisual(book, library.length - 1)
 }
 
 const book1 = new Book(
@@ -109,9 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
   addBookToLibrary(book10)
 })
 
-// checkboxes = document.querySelectorAll(".checkbox")
-// removeBtns = document.querySelectorAll(".removeBtn")
-
 addBookSubmit.addEventListener("click", (event) => {
   event.preventDefault()
   const book = new Book(
@@ -131,21 +122,6 @@ addBtn.addEventListener("click", () => {
 closeBtn.addEventListener("click", () => {
   newBookWrapper.classList.add("hidden")
 })
-
-// checkboxes.forEach((checkbox, index) => {
-//   checkbox.addEventListener("click", (event) => {
-//     library[index].read = !library[index].read
-//     event.currentTarget.firstChild.classList.toggle("read")
-//   })
-// })
-
-// removeBtns.forEach((button) => {
-//   button.addEventListener("click", (event) => {
-//     const bookIndex = event.currentTarget.closest(".book").dataset.index
-//     removeBookVisual(bookIndex)
-//     library.splice(bookIndex, 1)
-//   })
-// })
 
 function removeBookVisual(index) {
   document.querySelector(`[data-index="${index}"]`).remove()
@@ -173,14 +149,16 @@ function addBookVisual(book, index) {
 
   // Add eventlisteners for the checkbox
   bookTemplate.querySelector(".checkbox").addEventListener("click", (event) => {
-    library[bookElement.dataset.index].read =
-      !library[bookElement.dataset.index].read
-    event.currentTarget.firstChild.classList.toggle("read")
+    const bookContainer = event.currentTarget.closest(".book")
+    const bookIndex = bookContainer.dataset.index
+
+    library[bookIndex].read = !library[bookIndex].read
+    event.currentTarget.children[0].classList.toggle("read")
   })
 
   bookTemplate.querySelector("h2").innerHTML = book.title
-  bookTemplate.querySelector(".author").innerHTML = `Author ${book.title}`
-  bookTemplate.querySelector(".pages").innerHTML = `Pages ${book.pages}`
+  bookTemplate.querySelector(".author").innerHTML = `Author: ${book.title}`
+  bookTemplate.querySelector(".pages").innerHTML = `Pages: ${book.pages}`
 
   fragment.appendChild(bookTemplate)
   libraryDisplay.appendChild(fragment)
