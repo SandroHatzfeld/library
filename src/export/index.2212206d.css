@@ -1,0 +1,160 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+#wrapper {
+  padding: 40px;
+}
+
+#library {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  display: grid;
+}
+
+.book {
+  background-position: center;
+  background-size: cover;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 420px;
+  transition: all .4s;
+  display: flex;
+  overflow: hidden;
+}
+
+.book:hover {
+  transform: scale(1.1);
+}
+
+.bookControls {
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+  display: flex;
+}
+
+.checkbox {
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 3px;
+  align-self: flex-end;
+  width: 30px;
+  height: 30px;
+}
+
+.checkmark {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.checkmark.read {
+  opacity: 1;
+}
+
+.bookInfo {
+  opacity: 0;
+  padding: 10px;
+  transition: all .4s;
+  display: grid;
+  transform: translateY(100%);
+}
+
+.book:hover .bookInfo {
+  color: #fff;
+  opacity: 1;
+  background-color: #141414cc;
+  transform: translateY(0);
+}
+
+#addBtn {
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  transition: scale .3s;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+#addBtn:hover {
+  scale: 1.2;
+}
+
+.removeBtn {
+  opacity: 0;
+  cursor: pointer;
+  background-image: url("closeBtn.5e9a870c.svg");
+  width: 30px;
+  height: 30px;
+  transition: all .4s;
+}
+
+.book:hover .removeBtn {
+  opacity: 1;
+}
+
+#newBooksWrapper {
+  background-color: #1e1e1ecc;
+  place-content: center;
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  position: absolute;
+  inset: 0;
+}
+
+#newBooksWrapper form {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+#closeBtn {
+  float: right;
+  width: 30px;
+  height: 30px;
+  margin-left: 20px;
+}
+
+#elementContainer {
+  gap: 10px;
+  margin: 20px 0;
+  display: grid;
+}
+
+.formElement {
+  gap: 5px;
+  display: grid;
+}
+
+.formElement.inline {
+  display: block;
+}
+
+input {
+  padding: 10px;
+}
+
+input[type="checkbox"] {
+  margin-left: 0;
+  margin-right: 5px;
+}
+
+input[type="submit"] {
+  color: #fff;
+  cursor: pointer;
+  background-color: #8ac11f;
+  border: none;
+  border-radius: 5px;
+  align-self: self-end;
+}
+
+#newBooksWrapper.hidden {
+  display: none;
+}
+/*# sourceMappingURL=index.2212206d.css.map */
