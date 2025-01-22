@@ -1,5 +1,5 @@
-import baseLibrary from "baseLibrary.js"
-import Book from "book.js"
+import { baseLibrary } from "baseLibrary.js"
+import { Book } from "book.js"
 const libraryDisplay = document.querySelector("#library")
 const addBtn = document.querySelector("#addBtn")
 const closeBtn = document.querySelector("#closeBtn")
