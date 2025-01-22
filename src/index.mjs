@@ -20,11 +20,6 @@ function Book(title, author, pages, read, cover) {
   this.cover = cover
 }
 
-function addBookToLibrary(book) {
-  library.push(book)
-  addBookVisual(book, library.length - 1)
-}
-
 const book1 = new Book(
   "Der kleine Prinz",
   "Antoine de Saint-Exupéry",
@@ -89,17 +84,21 @@ const book10 = new Book(
   true,
   "https://michaelende.de/sites/default/files/Unendliche%20Geschichte_6.jpg"
 )
-document.addEventListener("DOMContentLoaded", () => {
-  addBookToLibrary(book1)
-  addBookToLibrary(book2)
-  addBookToLibrary(book3)
-  addBookToLibrary(book4)
-  addBookToLibrary(book6)
-  addBookToLibrary(book7)
-  addBookToLibrary(book8)
-  addBookToLibrary(book9)
-  addBookToLibrary(book10)
-})
+
+function addBookToLibrary(book) {
+  library.push(book)
+  updateVisuals()
+}
+
+addBookToLibrary(book1)
+addBookToLibrary(book2)
+addBookToLibrary(book3)
+addBookToLibrary(book4)
+addBookToLibrary(book6)
+addBookToLibrary(book7)
+addBookToLibrary(book8)
+addBookToLibrary(book9)
+addBookToLibrary(book10)
 
 addBookSubmit.addEventListener("click", (event) => {
   event.preventDefault()
@@ -122,9 +121,14 @@ closeBtn.addEventListener("click", () => {
 })
 
 function removeBookVisual(index) {
-  document.querySelector(`[data-index="${index}"]`).remove()
+  library.splice(index, 1)
+  updateVisuals()
 }
 
+function updateReadStatus(index) {
+  library[index].read = !library[index].read
+  updateVisuals()
+}
 function addBookVisual(book, index) {
   const fragment = document.createDocumentFragment()
 
@@ -142,16 +146,12 @@ function addBookVisual(book, index) {
     .addEventListener("click", (event) => {
       const bookIndex = event.currentTarget.closest(".book").dataset.index
       removeBookVisual(bookIndex)
-      library.splice(bookIndex, 1)
     })
 
   // Add eventlisteners for the checkbox
   bookTemplate.querySelector(".checkbox").addEventListener("click", (event) => {
-    const bookContainer = event.currentTarget.closest(".book")
-    const bookIndex = bookContainer.dataset.index
-
-    library[bookIndex].read = !library[bookIndex].read
-    event.currentTarget.children[0].classList.toggle("read")
+    const bookIndex = event.currentTarget.closest(".book").dataset.index
+    updateReadStatus(bookIndex)
   })
 
   if (book.read) {
@@ -164,4 +164,11 @@ function addBookVisual(book, index) {
 
   fragment.appendChild(bookTemplate)
   libraryDisplay.appendChild(fragment)
+}
+
+function updateVisuals() {
+  libraryDisplay.innerHTML = ""
+  library.forEach((book, index) => {
+    addBookVisual(book, index)
+  })
 }
