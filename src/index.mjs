@@ -33,7 +33,7 @@ addBookSubmit.addEventListener("click", (event) => {
     newBooksForm.reportValidity()
     return
   }
-  event.preventDefault()
+
   const book = new Book(
     addBookTitle.value,
     addBookAuthor.value,
@@ -42,15 +42,14 @@ addBookSubmit.addEventListener("click", (event) => {
     addBookCoverimage.value
   )
   addBookToLibrary(book)
-  newBooksWrapper.classList.add("hidden")
 })
 
 // eventlisteners for opening and closing the form
 addBtn.addEventListener("click", () => {
-  newBooksWrapper.classList.remove("hidden")
+  newBooksWrapper.showModal()
 })
 closeBtn.addEventListener("click", () => {
-  newBooksWrapper.classList.add("hidden")
+  newBooksWrapper.close()
 })
 
 // removing books and updating the visuals

@@ -11,14 +11,15 @@
       <h1>Your library</h1>
       <div id="library"></div>
       <img id="addBtn" src="./assets/images/addBtn.svg" />
-      <div id="newBooksWrapper" class="hidden">
-        <form id="newBooksForm" action="">
+      <dialog id="newBooksWrapper">
+        <form id="newBooksForm" method="dialog">
           <img id="closeBtn" src="./assets/images/closeBtn.svg" />
           <h2>Add a new Book to your library</h2>
           <div id="elementContainer">
             <div class="formElement">
               <label for="title">Title</label
               ><input
+                autofocus
                 required
                 type="text"
                 id="title"
@@ -54,10 +55,9 @@
           </div>
           <input type="submit" id="addBookSubmit" value="Add new book" />
         </form>
-      </div>
+      </dialog>
     </div>
 
-    <span id="ccnote">All copyright </span>
     <template id="bookTemplate">
       <div class="book">
         <div class="bookControls">
