@@ -33,12 +33,11 @@ addBookSubmit.addEventListener("click", (event) => {
     newBooksForm.reportValidity()
     return
   }
-
   const book = new Book(
     addBookTitle.value,
     addBookAuthor.value,
     addBookPages.value,
-    addBookStatus.value,
+    addBookStatus.checked,
     addBookCoverimage.value
   )
   addBookToLibrary(book)
@@ -97,7 +96,9 @@ function addBookVisual(book, index) {
 
   bookTemplate.querySelector("h2").innerHTML = book.title
   bookTemplate.querySelector(".author").innerHTML = `Author: ${book.author}`
-  bookTemplate.querySelector(".pages").innerHTML = `Pages: ${book.pages}`
+  if (book.pages !== "") {
+    bookTemplate.querySelector(".pages").innerHTML = `Pages: ${book.pages}`
+  }
 
   fragment.appendChild(bookTemplate)
   libraryDisplay.appendChild(fragment)
