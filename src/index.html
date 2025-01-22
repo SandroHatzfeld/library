@@ -8,7 +8,20 @@
 
   <body>
     <div id="wrapper">
-      <h1>Your library</h1>
+      <header>
+        <h1>Your library</h1>
+        <select name="sorting" id="sorting">
+          <option value="standard" disabled selected hidden>Unsorted</option>
+          <option value="pageCountASC">Page Count Ascending</option>
+          <option value="pageCountDESC">Page Count Descending</option>
+          <option value="titleASC">Title Ascending</option>
+          <option value="titleDESC">Title Descending</option>
+          <option value="authorASC">Author Ascending</option>
+          <option value="authorDESC">Author Descending</option>
+          <option value="unread">Unread</option>
+          <option value="read">Read</option>
+        </select>
+      </header>
       <div id="library"></div>
       <img id="addBtn" src="./assets/images/addBtn.svg" />
       <dialog id="newBooksWrapper">
@@ -53,7 +66,7 @@
               />
             </div>
           </div>
-          <input type="submit" id="addBookSubmit" value="Add new book" />
+          <input type="submit" id="newBookSubmit" value="Add new book" />
         </form>
       </dialog>
     </div>

@@ -5,12 +5,8 @@ const addBtn = document.querySelector("#addBtn")
 const closeBtn = document.querySelector("#closeBtn")
 const newBooksWrapper = document.querySelector("#newBooksWrapper")
 const newBooksForm = document.querySelector("#newBooksForm")
-const addBookTitle = document.querySelector("#title")
-const addBookAuthor = document.querySelector("#author")
-const addBookPages = document.querySelector("#pages")
-const addBookStatus = document.querySelector("#status")
-const addBookCoverimage = document.querySelector("#coverImage")
-const addBookSubmit = document.querySelector("#addBookSubmit")
+const newBookSubmit = document.querySelector("#newBookSubmit")
+const sortingBtn = document.querySelector("#sorting")
 
 const library = []
 
@@ -28,17 +24,17 @@ function addBookToLibrary(book) {
 addBookToLibrary(baseLibrary)
 
 // eventlisteners for adding a new book
-addBookSubmit.addEventListener("click", (event) => {
+newBookSubmit.addEventListener("click", (event) => {
   if (!newBooksForm.checkValidity()) {
     newBooksForm.reportValidity()
     return
   }
   const book = new Book(
-    addBookTitle.value,
-    addBookAuthor.value,
-    addBookPages.value,
-    addBookStatus.checked,
-    addBookCoverimage.value
+    document.querySelector("#title").value,
+    document.querySelector("#author").value,
+    document.querySelector("#pages").value,
+    document.querySelector("#status").checked,
+    document.querySelector("#coverImage").value
   )
   addBookToLibrary(book)
 })
@@ -110,4 +106,59 @@ function updateVisuals() {
   library.forEach((book, index) => {
     addBookVisual(book, index)
   })
+}
+
+sortingBtn.addEventListener("change", () => {
+  switch (sortingBtn.value) {
+    case "pageCountASC":
+      sortPagesAsc()
+      break
+    case "pageCountDESC":
+      sortPagesDesc()
+      break
+    case "titleASC":
+      sortTitleAsc()
+      break
+    case "titleDESC":
+      sortTitleDesc()
+      break
+    case "authorASC":
+      sortAuthorAsc()
+      break
+    case "authorDESC":
+      sortAuthorDesc()
+      break
+    case "unread":
+      sortUnread()
+      break
+    case "read":
+      sortRead()
+      break
+  }
+  updateVisuals()
+})
+
+function sortTitleAsc() {
+  library.sort((a, b) => a.title.localeCompare(b.title))
+}
+function sortTitleDesc() {
+  library.sort((a, b) => b.title.localeCompare(a.title))
+}
+function sortAuthorAsc() {
+  library.sort((a, b) => a.author.localeCompare(b.author))
+}
+function sortAuthorDesc() {
+  library.sort((a, b) => b.author.localeCompare(a.author))
+}
+function sortPagesAsc() {
+  library.sort((a, b) => a.pages - b.pages)
+}
+function sortPagesDesc() {
+  library.sort((a, b) => b.pages - a.pages)
+}
+function sortUnread() {
+  library.sort((a, b) => a.read - b.read)
+}
+function sortRead() {
+  library.sort((a, b) => b.read - a.read)
 }

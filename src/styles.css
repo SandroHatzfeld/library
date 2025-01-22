@@ -155,3 +155,17 @@ input[type="submit"] {
   color: white;
   cursor: pointer;
 }
+
+header {
+  position: relative;
+}
+
+#sorting {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 5px;
+  background-color: white;
+  border-radius: 5px;
+  border: none;
+}
