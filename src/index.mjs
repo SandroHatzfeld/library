@@ -9,11 +9,9 @@ const addBookStatus = document.querySelector("#status")
 const addBookCoverimage = document.querySelector("#coverImage")
 const addBookSubmit = document.querySelector("#addBookSubmit")
 
-var checkboxes
-var removeBtns
-
 const library = []
 
+// creating the book object
 function Book(title, author, pages, read, cover) {
   this.title = title
   this.author = author
@@ -155,6 +153,10 @@ function addBookVisual(book, index) {
     library[bookIndex].read = !library[bookIndex].read
     event.currentTarget.children[0].classList.toggle("read")
   })
+
+  if (book.read) {
+    bookTemplate.querySelector(".checkmark").classList.add("read")
+  }
 
   bookTemplate.querySelector("h2").innerHTML = book.title
   bookTemplate.querySelector(".author").innerHTML = `Author: ${book.title}`
