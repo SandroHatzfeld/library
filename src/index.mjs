@@ -1,7 +1,8 @@
 const libraryDisplay = document.querySelector("#library")
 const addBtn = document.querySelector("#addBtn")
 const closeBtn = document.querySelector("#closeBtn")
-const newBookWrapper = document.querySelector("#newBooksWrapper")
+const newBooksWrapper = document.querySelector("#newBooksWrapper")
+const newBooksForm = document.querySelector("#newBooksForm")
 const addBookTitle = document.querySelector("#title")
 const addBookAuthor = document.querySelector("#author")
 const addBookPages = document.querySelector("#pages")
@@ -101,23 +102,29 @@ addBookToLibrary(book9)
 addBookToLibrary(book10)
 
 addBookSubmit.addEventListener("click", (event) => {
+  if (!newBooksForm.checkValidity()) {
+    newBooksForm.reportValidity()
+    return
+  }
   event.preventDefault()
   const book = new Book(
     addBookTitle.value,
     addBookAuthor.value,
     addBookPages.value,
     addBookStatus.value,
-    addBookCoverimage.value
+    addBookCoverimage.value === ""
+      ? "https://www.forewordreviews.com/books/covers/get-into-college.jpg"
+      : addBookCoverimage.value
   )
   addBookToLibrary(book)
-  newBookWrapper.classList.add("hidden")
+  newBooksWrapper.classList.add("hidden")
 })
 
 addBtn.addEventListener("click", () => {
-  newBookWrapper.classList.remove("hidden")
+  newBooksWrapper.classList.remove("hidden")
 })
 closeBtn.addEventListener("click", () => {
-  newBookWrapper.classList.add("hidden")
+  newBooksWrapper.classList.add("hidden")
 })
 
 function removeBookVisual(index) {
@@ -159,7 +166,7 @@ function addBookVisual(book, index) {
   }
 
   bookTemplate.querySelector("h2").innerHTML = book.title
-  bookTemplate.querySelector(".author").innerHTML = `Author: ${book.title}`
+  bookTemplate.querySelector(".author").innerHTML = `Author: ${book.author}`
   bookTemplate.querySelector(".pages").innerHTML = `Pages: ${book.pages}`
 
   fragment.appendChild(bookTemplate)

@@ -8,20 +8,27 @@
 
   <body>
     <div id="wrapper">
+      <h1>Your library</h1>
       <div id="library"></div>
       <img id="addBtn" src="./assets/images/addBtn.svg" />
       <div id="newBooksWrapper" class="hidden">
-        <form action="">
+        <form id="newBooksForm" action="">
           <img id="closeBtn" src="./assets/images/closeBtn.svg" />
           <h2>Add a new Book to your library</h2>
           <div id="elementContainer">
             <div class="formElement">
               <label for="title">Title</label
-              ><input type="text" id="title" placeholder="E.g. The Hobbit" />
+              ><input
+                required
+                type="text"
+                id="title"
+                placeholder="E.g. The Hobbit"
+              />
             </div>
             <div class="formElement">
               <label for="author">Author</label
               ><input
+                required
                 type="text"
                 id="author"
                 placeholder="E.g. J.R.R. Tolkien"
@@ -41,7 +48,7 @@
               ><input
                 type="url"
                 id="coverImage"
-                placeholder="URL to an image"
+                placeholder="URL to the cover"
               />
             </div>
           </div>
